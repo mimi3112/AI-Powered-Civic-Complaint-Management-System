@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Home - AI-Powered Civic Complaint Management System{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <div class="card shadow-sm border-0 p-5 bg-white rounded-3">
+                <div class="mb-4">
+                    <span class="badge bg-primary px-3 py-2 fs-6 mb-2">Municipal Grievance Redressal</span>
+                    <h1 class="display-5 fw-bold text-dark mt-2">
+                        AI-Powered Civic Complaint Management System
+                    </h1>
+                </div>
+
+                <p class="lead text-secondary mb-4">
+                    An integrated web-based platform designed to enable citizens to register civic issues,
+                    provide municipal authorities with centralized oversight, and streamline complaint tracking
+                    for improved transparency and governance.
+                </p>
+
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    {% if session.get('user_id') %}
+                        {% if session.get('user_role') == 'Citizen' %}
+                            <a href="{{ url_for('citizen.dashboard') }}" class="btn btn-primary btn-lg px-4">Go to Citizen Dashboard</a>
+                        {% elif session.get('user_role') == 'Municipal Officer' %}
+                            <a href="{{ url_for('officer.dashboard') }}" class="btn btn-primary btn-lg px-4">Go to Officer Dashboard</a>
+                        {% elif session.get('user_role') == 'Administrator' %}
+                            <a href="{{ url_for('admin.dashboard') }}" class="btn btn-primary btn-lg px-4">Go to Admin Dashboard</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg px-4">Login</a>
+                        <a href="{{ url_for('auth.register') }}" class="btn btn-outline-primary btn-lg px-4">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

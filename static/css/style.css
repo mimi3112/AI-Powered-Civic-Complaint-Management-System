@@ -1,0 +1,28 @@
+/* Custom styling for Civic Complaint Management System */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #333333;
+    background-color: #f8f9fa;
+}
+
+.navbar-brand {
+    letter-spacing: 0.5px;
+}
+
+.card {
+    border-radius: 8px;
+}
+
+.table th {
+    font-weight: 600;
+}
+
+.badge {
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+.footer {
+    font-size: 0.85rem;
+}

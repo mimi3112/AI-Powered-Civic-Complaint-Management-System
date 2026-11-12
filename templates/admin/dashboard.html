@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Civic Complaint System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card shadow-sm border-0 p-4 bg-white rounded-3">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <div>
+                        <h2 class="fw-bold mb-1">Administrator Dashboard</h2>
+                        <p class="text-muted mb-0">
+                            Logged in as: <strong class="text-dark">{{ name }}</strong> | Role: <span class="badge bg-danger">{{ role }}</span>
+                        </p>
+                    </div>
+                    <div>
+                        <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-danger">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Statistics via SQLAlchemy ORM -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm border-0 rounded-3 border-start border-primary border-4">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="text-uppercase text-muted fw-bold small mb-1">Total Registered Users</p>
+                            <h2 class="display-5 fw-bold text-primary mb-0">{{ total_users }}</h2>
+                        </div>
+                        <div class="fs-1 text-primary opacity-50">
+                            &#128101;
+                        </div>
+                    </div>
+                    <small class="text-secondary mt-2 d-block">Citizens, Officers, and Administrators across the system</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm border-0 rounded-3 border-start border-success border-4">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="text-uppercase text-muted fw-bold small mb-1">Total Filed Complaints</p>
+                            <h2 class="display-5 fw-bold text-success mb-0">{{ total_complaints }}</h2>
+                        </div>
+                        <div class="fs-1 text-success opacity-50">
+                            &#128221;
+                        </div>
+                    </div>
+                    <small class="text-secondary mt-2 d-block">Total complaints registered across all wards</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header bg-light py-3 border-bottom">
+                    <h5 class="mb-0 fw-semibold text-dark">System Oversight</h5>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-secondary mb-0">
+                        Centralized administrative overview for monitoring system activity, registered municipal actors, and civic grievance records.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Civic Complaint Management System{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <h4 class="mb-0 fw-bold">Create an Account</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST" action="{{ url_for('auth.register') }}" novalidate>
+                        <div class="mb-3">
+                            <label for="name" class="form-label fw-semibold">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ name or '' }}" required autofocus placeholder="e.g. John Doe">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-semibold">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ email or '' }}" required placeholder="name@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label fw-semibold">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required placeholder="Choose a secure password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="role" class="form-label fw-semibold">Select Role</label>
+                            <select class="form-select" id="role" name="role" required>
+                                <option value="" disabled {% if not role %}selected{% endif %}>Choose your role...</option>
+                                <option value="Citizen" {% if role == 'Citizen' %}selected{% endif %}>Citizen</option>
+                                <option value="Municipal Officer" {% if role == 'Municipal Officer' %}selected{% endif %}>Municipal Officer</option>
+                                <option value="Administrator" {% if role == 'Administrator' %}selected{% endif %}>Administrator</option>
+                            </select>
+                            <div class="form-text">Select your role to access the corresponding portal.</div>
+                        </div>
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer bg-light text-center py-3 border-0">
+                    <span class="text-muted">Already have an account?</span>
+                    <a href="{{ url_for('auth.login') }}" class="text-primary fw-semibold text-decoration-none">Log in here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

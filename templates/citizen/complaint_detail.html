@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}Complaint Details #{{ complaint.id }} - Civic Complaint System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="card shadow-sm border-0 rounded-3 mb-4">
+                <div class="card-header bg-primary text-white py-3">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <h4 class="mb-0 fw-bold">Complaint #{{ complaint.id }}</h4>
+                        <a href="{{ url_for('citizen.track_complaints') }}" class="btn btn-outline-light btn-sm">Back to My Complaints</a>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+                    <!-- Title & Header Details -->
+                    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
+                        <div>
+                            <h3 class="fw-bold text-dark mb-1">{{ complaint.title }}</h3>
+                            <!--
+                            <div class="text-muted small">
+                                Filed on: <strong>{{ complaint.created_at.strftime('%Y-%m-%d %H:%M UTC') }}</strong>
+                            </div>
+                            -->
+                        </div>
+                        <div class="d-flex gap-2">
+                            <span class="badge bg-primary px-3 py-2 fs-6">{{ complaint.status }}</span>
+                            {% if complaint.priority == 'Highest' %}
+                                <span class="badge bg-danger px-3 py-2 fs-6">Highest Priority</span>
+                            {% elif complaint.priority == 'High' %}
+                                <span class="badge bg-warning text-dark px-3 py-2 fs-6">High Priority</span>
+                            {% elif complaint.priority == 'Medium' %}
+                                <span class="badge bg-info text-dark px-3 py-2 fs-6">Medium Priority</span>
+                            {% else %}
+                                <span class="badge bg-secondary px-3 py-2 fs-6">Low Priority</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Metadata Grid -->
+                    <div class="row g-3 bg-light p-3 rounded border mb-4">
+                        <div class="col-md-6">
+                            <span class="text-muted small d-block">Category</span>
+                            <strong class="text-dark">{{ complaint.category }}</strong>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="text-muted small d-block">Location</span>
+                            <strong class="text-dark">&#128205; {{ complaint.location }}</strong>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-dark">Description:</h6>
+                        <div class="p-3 bg-white rounded border" style="white-space: pre-wrap;">{{ complaint.description }}</div>
+                    </div>
+
+                    <!-- Supporting Image -->
+                    {% if complaint.image_path %}
+                        <div class="mb-4">
+                            <h6 class="fw-bold text-dark">Supporting Photographic Evidence:</h6>
+                            <div class="border rounded p-3 text-center bg-light">
+                                <a href="{{ url_for('static', filename=complaint.image_path) }}" target="_blank">
+                                    <img src="{{ url_for('static', filename=complaint.image_path) }}" alt="Supporting Evidence" class="img-fluid rounded shadow-sm" style="max-height: 400px;">
+                                </a>
+                                <div class="mt-2 text-muted small">Click image to view in full resolution</div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- Visual Lifecycle Stepper -->
+                    <div class="mb-4 pt-3 border-top">
+                        <h6 class="fw-bold text-dark mb-3">Lifecycle Progress</h6>
+                        <div class="d-flex justify-content-between text-center position-relative mb-2">
+                            <div class="step flex-fill">
+                                <div class="badge rounded-pill bg-success p-2 mb-1">&#10003;</div>
+                                <div class="small fw-semibold text-dark">Submitted</div>
+                            </div>
+                            <div class="step flex-fill">
+                                <div class="badge rounded-pill {% if complaint.status in ['Complaint Categorized', 'Department Assigned', 'Complaint Under Review', 'In Progress', 'Complaint Resolved', 'Complaint Closed'] %}bg-success{% else %}bg-secondary{% endif %} p-2 mb-1">
+                                    {% if complaint.status in ['Complaint Categorized', 'Department Assigned', 'Complaint Under Review', 'In Progress', 'Complaint Resolved', 'Complaint Closed'] %}&#10003;{% else %}2{% endif %}
+                                </div>
+                                <div class="small text-muted">Categorized</div>
+                            </div>
+                            <div class="step flex-fill">
+                                <div class="badge rounded-pill {% if complaint.status in ['Department Assigned', 'Complaint Under Review', 'In Progress', 'Complaint Resolved', 'Complaint Closed'] %}bg-success{% else %}bg-secondary{% endif %} p-2 mb-1">
+                                    {% if complaint.status in ['Department Assigned', 'Complaint Under Review', 'In Progress', 'Complaint Resolved', 'Complaint Closed'] %}&#10003;{% else %}3{% endif %}
+                                </div>
+                                <div class="small text-muted">Assigned</div>
+                            </div>
+                            <div class="step flex-fill">
+                                <div class="badge rounded-pill {% if complaint.status in ['Complaint Under Review', 'In Progress', 'Complaint Resolved', 'Complaint Closed'] %}bg-success{% else %}bg-secondary{% endif %} p-2 mb-1">
+                                    {% if complaint.status in ['Complaint Under Review', 'In Progress', 'Complaint Resolved', 'Complaint Closed'] %}&#10003;{% else %}4{% endif %}
+                                </div>
+                                <div class="small text-muted">In Progress</div>
+                            </div>
+                            <div class="step flex-fill">
+                                <div class="badge rounded-pill {% if complaint.status in ['Complaint Resolved', 'Complaint Closed'] %}bg-success{% else %}bg-secondary{% endif %} p-2 mb-1">
+                                    {% if complaint.status in ['Complaint Resolved', 'Complaint Closed'] %}&#10003;{% else %}5{% endif %}
+                                </div>
+                                <div class="small text-muted">Resolved</div>
+                            </div>
+                            <div class="step flex-fill">
+                                <div class="badge rounded-pill {% if complaint.status == 'Complaint Closed' %}bg-success{% else %}bg-secondary{% endif %} p-2 mb-1">
+                                    {% if complaint.status == 'Complaint Closed' %}&#10003;{% else %}6{% endif %}
+                                </div>
+                                <div class="small text-muted">Closed</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Status History Timeline -->
+                    <div class="pt-3 border-top">
+                        <h6 class="fw-bold text-dark mb-3">Status History & Audit Trail</h6>
+                        {% if history %}
+                            <div class="table-responsive">
+                                <table class="table table-sm table-bordered align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th style="width: 15%;">Entry</th>
+                                            <!-- <th style="width: 25%;">Timestamp</th> -->
+                                            <th style="width: 25%;">Status</th>
+                                            <th style="width: 25%;">Updated By</th>
+                                            <th style="width: 35%;">Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for h in history %}
+                                            <tr>
+                                                <td class="text-muted small fw-semibold">Step #{{ loop.index }}</td>
+                                                <!-- <td class="text-muted small">{{ h.created_at.strftime('%Y-%m-%d %H:%M:%S UTC') }}</td> -->
+                                                <td><span class="badge bg-primary">{{ h.status }}</span></td>
+                                                <td class="small">{{ h.updated_by }}</td>
+                                                <td class="small">{{ h.remarks or 'N/A' }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <p class="text-muted small">No history records logged yet.</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-4">
+                        <a href="{{ url_for('citizen.track_complaints') }}" class="btn btn-secondary">Back to My Complaints</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

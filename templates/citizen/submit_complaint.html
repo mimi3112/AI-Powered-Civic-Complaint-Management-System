@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Submit Complaint - Civic Complaint System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header bg-primary text-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0 fw-bold">Submit Civic Complaint</h4>
+                        <a href="{{ url_for('citizen.dashboard') }}" class="btn btn-outline-light btn-sm">Back to Dashboard</a>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST" action="{{ url_for('citizen.submit_complaint') }}" enctype="multipart/form-data" novalidate>
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <label for="title" class="form-label fw-semibold">Complaint Title <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="title" name="title" value="{{ title or '' }}" required placeholder="e.g. Broken streetlight on 5th Avenue">
+                            <div class="form-text">Brief, clear summary of the civic issue.</div>
+                        </div>
+
+                        <!-- Category and Priority Row -->
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label for="category" class="form-label fw-semibold">Category <span class="text-danger">*</span></label>
+                                <select class="form-select" id="category" name="category" required>
+                                    <option value="" disabled {% if not category %}selected{% endif %}>Select category...</option>
+                                    {% for cat in categories %}
+                                        <option value="{{ cat }}" {% if category == cat %}selected{% endif %}>{{ cat }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="priority" class="form-label fw-semibold">Priority <span class="text-danger">*</span></label>
+                                <select class="form-select" id="priority" name="priority" required>
+                                    <option value="" disabled {% if not priority %}selected{% endif %}>Select priority...</option>
+                                    {% for pri in priorities %}
+                                        <option value="{{ pri }}" {% if priority == pri or (not priority and pri == 'Medium') %}selected{% endif %}>{{ pri }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="mb-3">
+                            <label for="location" class="form-label fw-semibold">Location / Address / Landmark <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="location" name="location" value="{{ location or '' }}" minlength="3" maxlength="200" required placeholder="e.g. Near Pole #42, Opposite City Hospital, Sector 4 Market">
+                            <div class="form-text">Accurate location helps municipal teams locate and inspect the problem (3-200 characters).</div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label for="description" class="form-label fw-semibold">Complaint Description <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="description" name="description" rows="5" required placeholder="Provide details such as exact location, severity, hazards caused, or history of the issue...">{{ description or '' }}</textarea>
+                            <div class="form-text">Detailed explanation of the issue encountered.</div>
+                        </div>
+
+                        <!-- Supporting Image -->
+                        <div class="mb-4">
+                            <label for="image" class="form-label fw-semibold">Supporting Image <span class="text-muted">(Optional evidence)</span></label>
+                            <input class="form-control" type="file" id="image" name="image" accept="image/*, .png, .jpg, .jpeg, .gif, .webp" onchange="previewImage(event)">
+                            <div class="form-text">
+                                Supported formats: PNG, JPG, JPEG, GIF, WEBP (Max: 5MB).
+                            </div>
+                            <div id="imagePreviewContainer" class="mt-3 text-center d-none">
+                                <p class="small text-muted mb-1">Image Preview:</p>
+                                <img id="imagePreview" src="#" alt="Preview" class="img-thumbnail" style="max-height: 200px;">
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <a href="{{ url_for('citizen.dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary px-4 py-2 fw-semibold">Submit Complaint</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function previewImage(event) {
+    const input = event.target;
+    const container = document.getElementById('imagePreviewContainer');
+    const preview = document.getElementById('imagePreview');
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            container.classList.remove('d-none');
+        };
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        container.classList.add('d-none');
+        preview.src = '#';
+    }
+}
+</script>
+{% endblock %}
