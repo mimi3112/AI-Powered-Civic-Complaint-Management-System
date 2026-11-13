@@ -11,7 +11,7 @@ A centralized, full-stack civic grievance redressal and tracking web application
 
 ---
 
-## 🏛️ System Roles & Personas (RBAC)
+## System Roles & Personas (RBAC)
 
 The system implements strict **Role-Based Access Control (RBAC)** across three personas:
 
@@ -23,7 +23,7 @@ The system implements strict **Role-Based Access Control (RBAC)** across three p
 
 ---
 
-## ✨ Key Features & Technical Highlights
+## Key Features & Technical Highlights
 
 ### 1. Complaint Submission Module (SRS Feature 2, FR-4 to FR-6)
 - **Input Validation:** Mandatory field validation with boundary constraints on location ($3 \le \text{length} \le 200$ chars) and whitelisted categories.
@@ -40,7 +40,7 @@ The system implements strict **Role-Based Access Control (RBAC)** across three p
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 - **Backend Framework:** Python 3.12, Flask 3.1 (Modular Blueprints architecture)
 - **Database & ORM:** SQLite 3, Flask-SQLAlchemy / SQLAlchemy 2.0
@@ -51,7 +51,7 @@ The system implements strict **Role-Based Access Control (RBAC)** across three p
 
 ---
 
-## 🚀 Quick Start Guide
+## Quick Start Guide
 
 ### 1. Clone the Repository
 ```bash
@@ -85,11 +85,9 @@ python seed_demo_data.py
 ```bash
 python app.py
 ```
-Open your browser at: **`http://127.0.0.1:5000`**
-
 ---
 
-## 🧪 Automated Testing Suite
+## Automated Testing Suite
 
 The project includes an automated test harness covering **6 Software Engineering Testing Techniques** ($3 \text{ test cases each} = 18 \text{ total}$):
 
@@ -111,7 +109,7 @@ python test_prototype.py
 
 ---
 
-## 📊 Database Inspection CLI
+## Database Inspection CLI
 
 To quickly view the state of the SQLite database directly in your terminal:
 ```bash
@@ -121,7 +119,7 @@ Displays formatted ASCII tables for `users`, `complaints`, and `status_history`.
 
 ---
 
-## 📁 Project Directory Structure
+## Project Directory Structure
 
 ```text
 5Sem_SELab/
@@ -132,9 +130,7 @@ Displays formatted ASCII tables for `users`, `complaints`, and `status_history`.
 │── run_comprehensive_tests.py     # 18-case automated test suite & Excel exporter
 │── test_prototype.py              # 20-test prototype integration test suite
 │── view_database.py               # Database inspection CLI utility
-│── delete_complaint.py            # Utility script to delete complaints safely
 │── civic_complaint_test_cases.csv # Formatted CSV test matrix
-│── civic_complaint_test_cases.xlsx# Styled Excel test report
 │── instance/
 │   └── civic_complaints.db        # SQLite database
 │── models/
