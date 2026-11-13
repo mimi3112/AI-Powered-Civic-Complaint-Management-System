@@ -122,7 +122,7 @@ Displays formatted ASCII tables for `users`, `complaints`, and `status_history`.
 ## Project Directory Structure
 
 ```text
-5Sem_SELab/
+APCCMS/
 │── app.py                         # Application factory & Blueprint registration
 │── config.py                      # System configuration & upload limits
 │── requirements.txt               # Dependencies list
