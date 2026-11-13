@@ -36,6 +36,7 @@ venv.bak/
 # Environment Variables
 .env
 .env.local
+.env.example
 
 # IDE & Editor files
 .vscode/
